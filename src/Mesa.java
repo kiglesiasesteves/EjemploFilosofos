@@ -20,21 +20,22 @@ public class Mesa {
         }
     }
 
-    public  void cogerTenedores(int comensal){
+    // Método sin sincronización, los filósofos compiten por los tenedores
+    public void cogerTenedores(int comensal){
 
-        while(tenedores[tenedorIzquierda(comensal)] || tenedores[tenedorDerecha(comensal)]){
-            try {
-                wait();
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Mesa.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        // No se espera ni se coordina, cada filósofo intenta coger los tenedores
+        //Eliminé la sincronización y el wait():
+        // Ahora los filósofos intentan tomar los tenedores sin esperar a que estén disponibles.
+        // Esto simula la falta de coordinación.
+        if (tenedores[tenedorIzquierda(comensal)] || tenedores[tenedorDerecha(comensal)]) {
+            System.out.println("Filósofo " + (comensal + 1) + " no pudo comer, esperando por tenedores.");
         }
 
         tenedores[tenedorIzquierda(comensal)] = true;
         tenedores[tenedorDerecha(comensal)] = true;
     }
 
-    public  void dejarTenedores(int comensal){
+    public void dejarTenedores(int comensal){
         tenedores[tenedorIzquierda(comensal)] = false;
         tenedores[tenedorDerecha(comensal)] = false;
     }
