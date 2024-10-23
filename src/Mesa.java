@@ -20,7 +20,7 @@ public class Mesa {
         }
     }
 
-    public  void cogerTenedores(int comensal){
+    public synchronized void cogerTenedores(int comensal){
 
         while(tenedores[tenedorIzquierda(comensal)] || tenedores[tenedorDerecha(comensal)]){
             try {
@@ -34,9 +34,10 @@ public class Mesa {
         tenedores[tenedorDerecha(comensal)] = true;
     }
 
-    public  void dejarTenedores(int comensal){
+    public synchronized void dejarTenedores(int comensal){
         tenedores[tenedorIzquierda(comensal)] = false;
         tenedores[tenedorDerecha(comensal)] = false;
+        notifyAll();
     }
 
 }
